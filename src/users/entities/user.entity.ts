@@ -1,5 +1,6 @@
+import { Appointment } from "src/appointments/entities/appointment.entity";
 import { Role } from "src/roles/entities/role.entity";
-import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, OneToMany, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('users')
 export class User {
@@ -21,4 +22,10 @@ export class User {
 
     @CreateDateColumn()
     creationDate: Date;
+
+    @OneToMany(() => Appointment, appointment => appointment.doctor)
+    doctorsAppointments: Appointment[];
+
+    @OneToMany(() => Appointment, appointment => appointment.patient)
+    patientsAppointments: Appointment[];
 }

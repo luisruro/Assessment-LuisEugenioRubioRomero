@@ -1,4 +1,4 @@
-import { Body, Controller, Post } from '@nestjs/common';
+import { Body, Controller, Param, ParseUUIDPipe, Post } from '@nestjs/common';
 import { AppointmentsService } from './appointments.service';
 import { CreateAppointmentDto } from './dto/create-appointment.dto';
 
@@ -6,8 +6,8 @@ import { CreateAppointmentDto } from './dto/create-appointment.dto';
 export class AppointmentsController {
     constructor(private readonly appointmentsService: AppointmentsService) { };
     
-    @Post('schedule')
-    async scheduleAppointment(@Body() createAppointmentDto: CreateAppointmentDto) {
-        return this.appointmentsService.createAppointment(createAppointmentDto);
+    @Post('schedule/:patiendtId')
+    async scheduleAppointment(@Param('patientId', ParseUUIDPipe) patientId: string, @Body() createAppointmentDto: CreateAppointmentDto) {
+        return this.appointmentsService.createAppointment(patientId, createAppointmentDto);
     }
 }

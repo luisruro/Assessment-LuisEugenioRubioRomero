@@ -1,12 +1,10 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { User } from "src/users/entities/user.entity";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 
 @Entity('appointments')
 export class Appointment {
     @PrimaryGeneratedColumn('uuid')
     id: string;
-
-    @Column()
-    doctorId: string;
 
     @Column({type: 'timestamp'})
     startTime: Date;
@@ -16,4 +14,12 @@ export class Appointment {
 
     @Column()
     reason: string;
+
+    @ManyToOne(() => User, user => user.patientsAppointments, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'patientId' })
+    patient: User;
+
+    @ManyToOne(() => User, user => user.doctorsAppointments, { onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'doctorId' })
+    doctor: User;
 }

@@ -57,7 +57,7 @@ export class UsersService {
             where: {
                 id
             },
-            relations: ['role']
+            relations: ['role', 'doctorsAppointments', 'doctorsAppointments.patient']
         });
 
         if (!userFound) {
