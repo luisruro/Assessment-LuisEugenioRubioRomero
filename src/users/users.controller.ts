@@ -10,6 +10,7 @@ import { Role } from 'src/common/enums/role.enum';
 export class UsersController {
     constructor(private readonly usersService: UsersService) { };
 
+    @Auth([Role.PATIENT])
     @Post()
     async createUser(@Body() createUserDto: CreateUserDto) {
         return await this.usersService.createUser(createUserDto);
